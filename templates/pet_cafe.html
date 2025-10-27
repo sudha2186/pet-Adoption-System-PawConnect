@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Pet Café - PawConnect{% endblock %}
+{% set active_page = 'pet_cafe' %}
+
+{% block content %}
+<section class="pet-cafe-section py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4">Welcome to the PawConnect Pet Café ☕🐾</h2>
+        <p class="text-muted mb-5">
+            Relax, enjoy a cup of coffee, and meet our adorable furry friends in a cozy setting.
+        </p>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='images/pet_cafe.jpg') }}" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-md-6 text-start">
+                <h4>Why Visit Our Café?</h4>
+                <ul class="list-unstyled">
+                    <li>🐕 Play with friendly dogs and cats</li>
+                    <li>☕ Enjoy delicious beverages and snacks</li>
+                    <li>💬 Meet like-minded animal lovers</li>
+                    <li>❤️ Support pet adoption initiatives</li>
+                </ul>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary-custom mt-3">Book a Visit</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

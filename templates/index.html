@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Home - PawConnect{% endblock %}
+{% set active_page = 'home' %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to PawConnect</h1>
+        <p class="hero-subtitle">Find Your Perfect Companion</p>
+        <p class="hero-tagline">Connecting people and paws through compassion. Give a loving pet a forever home.</p>
+        <a href="{{ url_for('adoption') }}" class="btn btn-primary-custom">Start Adopting</a>
+    </div>
+</section>
+
+<section class="pet-categories py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Browse by Category</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card" onclick="showPetModal('dog')">
+                    <img src="https://images.unsplash.com/photo-1633722715463-d30628519d00?w=400&h=300&fit=crop" alt="Dogs" class="category-image">
+                    <div class="category-overlay">
+                        <h3>Dogs</h3>
+                        <p>Loyal & Loving</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card" onclick="showPetModal('cat')">
+                    <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=300&fit=crop" alt="Cats" class="category-image">
+                    <div class="category-overlay">
+                        <h3>Cats</h3>
+                        <p>Independent & Playful</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card" onclick="showPetModal('rabbit')">
+                    <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4d4b3f0?w=400&h=300&fit=crop" alt="Rabbits" class="category-image">
+                    <div class="category-overlay">
+                        <h3>Rabbits</h3>
+                        <p>Gentle & Cute</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card" onclick="showPetModal('bird')">
+                    <img src="https://images.unsplash.com/photo-1444464666175-1642a9f33e12?w=400&h=300&fit=crop" alt="Birds" class="category-image">
+                    <div class="category-overlay">
+                        <h3>Birds</h3>
+                        <p>Colorful & Vocal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="featured-pets py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Featured Pets Waiting for You</h2>
+        <div class="row g-4" id="featuredPetsContainer">
+            <!-- Dynamic JS content -->
+        </div>
+    </div>
+</section>
+
+<section class="why-choose-us py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Why Choose PawConnect?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-heart feature-icon"></i>
+                    <h4>Compassionate Matching</h4>
+                    <p>We carefully match pets with loving families to ensure lifelong happiness.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h4>Safe & Verified</h4>
+                    <p>All pets are health-checked and vaccinated before adoption.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-handshake feature-icon"></i>
+                    <h4>Lifetime Support</h4>
+                    <p>We provide ongoing support and guidance throughout your pet's life.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Volunteer - PawConnect{% endblock %}
+{% set active_page = 'volunteer' %}
+
+{% block content %}
+<section class="volunteer-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Become a Volunteer</h2>
+            <p class="text-muted">Join our community and make a difference in the lives of animals in need.</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('volunteer') }}" class="mx-auto" style="max-width: 700px;">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Full Name</label>
+                <input type="text" class="form-control" name="full_name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Email</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Phone</label>
+                <input type="tel" class="form-control" name="phone">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Why do you want to volunteer?</label>
+                <textarea class="form-control" rows="4" name="reason" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100">Submit Application</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
