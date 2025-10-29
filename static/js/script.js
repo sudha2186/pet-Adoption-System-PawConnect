@@ -19,7 +19,7 @@ const petsData = [
     weight: "28 kg",
     vaccination: "vaccinated",
     healthStatus: "Excellent",
-    image: "https://images.unsplash.com/photo-1633722715463-d30628519d00?w=400&h=300&fit=crop",
+    image: "/static/images/bigdog.jpg",
     description: "Friendly and energetic Golden Retriever looking for an active family.",
   },
   {
@@ -32,7 +32,7 @@ const petsData = [
     weight: "4 kg",
     vaccination: "vaccinated",
     healthStatus: "Good",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=300&fit=crop",
+    image: "/static/images/whitecat.jpg",
     description: "Playful and affectionate tabby cat perfect for families.",
   },
   {
@@ -45,7 +45,7 @@ const petsData = [
     weight: "2 kg",
     vaccination: "vaccinated",
     healthStatus: "Excellent",
-    image: "https://images.unsplash.com/photo-1585110396000-c9ffd4d4b3f0?w=400&h=300&fit=crop",
+    image: "/static/images/rabbit.jpg",
     description: "Cute and gentle rabbit, loves vegetables and cuddles.",
   },
   {
@@ -58,7 +58,7 @@ const petsData = [
     weight: "32 kg",
     vaccination: "vaccinated",
     healthStatus: "Good",
-    image: "https://images.unsplash.com/photo-1633722715463-d30628519d00?w=400&h=300&fit=crop",
+    image: "/static/images/puppydogwhite.jpg",
     description: "Calm and well-trained Labrador, great with kids.",
   },
   {
@@ -71,7 +71,7 @@ const petsData = [
     weight: "5 kg",
     vaccination: "vaccinated",
     healthStatus: "Fair",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=300&fit=crop",
+    image: "/static/images/blacktigercat.jpg",
     description: "Gentle senior cat seeking a quiet home.",
   },
   {
@@ -84,7 +84,7 @@ const petsData = [
     weight: "0.5 kg",
     vaccination: "not-vaccinated",
     healthStatus: "Excellent",
-    image: "https://images.unsplash.com/photo-1444464666175-1642a9f33e12?w=400&h=300&fit=crop",
+    image: "/static/images/parrot.jpg",
     description: "Colorful and vocal parrot, loves music and interaction.",
   },
 ];
