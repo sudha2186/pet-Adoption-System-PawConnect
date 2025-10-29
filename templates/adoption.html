@@ -3,28 +3,155 @@
 {% set active_page = 'adoption' %}
 
 {% block content %}
-<section class="adoption-section py-5">
-    <div class="container text-center">
-        <h2 class="fw-bold mb-4">Find Your Perfect Companion 🐶🐱</h2>
-        <p class="text-muted mb-5">Browse through our adorable pets waiting for a loving home.</p>
-
-        <div class="row g-4">
-            {% for pet in pets %}
-            <div class="col-md-4">
-                <div class="card pet-card h-100">
-                    <img src="{{ url_for('static', filename='images/pets/' + pet.image) }}" class="card-img-top" alt="{{ pet.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ pet.name }}</h5>
-                        <p class="card-text">Breed: {{ pet.breed }}</p>
-                        <p class="card-text">Age: {{ pet.age }} years</p>
-                        <a href="{{ url_for('contact') }}" class="btn btn-primary-custom">Adopt Now</a>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <p class="text-muted">No pets available right now. Check back soon!</p>
-            {% endfor %}
-        </div>
-    </div>
+<section class="page-header">
+  <div class="container">
+    <h1>Find Your Perfect Pet</h1>
+    <p>Browse our available pets and find your new family member</p>
+  </div>
 </section>
+
+<section class="filters-section py-4 bg-light">
+  <div class="container">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-4">
+        <label class="form-label fw-bold">Pet Type</label>
+        <select class="form-select" id="typeFilter" onchange="filterPets()">
+          <option value="" {% if not selected_type %}selected{% endif %}>All Types</option>
+          <option value="dog" {% if selected_type == 'dog' %}selected{% endif %}>Dog</option>
+          <option value="cat" {% if selected_type == 'cat' %}selected{% endif %}>Cat</option>
+          <option value="rabbit" {% if selected_type == 'rabbit' %}selected{% endif %}>Rabbit</option>
+          <option value="bird" {% if selected_type == 'bird' %}selected{% endif %}>Bird</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4" id="petCardsContainer">
+      {% for pet in pets %}
+      <div class="col-md-4">
+        <div class="card pet-card h-100">
+          <img src="{{ url_for('static', filename='images/pets/' + pet.image) }}" class="card-img-top" alt="{{ pet.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ pet.name }}</h5>
+            <p class="card-text">Breed: {{ pet.breed }}</p>
+            <p class="card-text">Age: {{ pet.age }} years</p>
+            <div class="d-flex justify-content-between mt-3">
+            <div class="pet-buttons d-flex gap-2 justify-content-center mt-2">
+            <button class="btn-adopt flex-fill"
+                    onclick="openAdoptionModal('{{ pet.name }}', '{{ pet.breed }}', '{{ pet.age }}', '{{ pet.healthStatus }}', '{{ pet.vaccination }}')">
+                Adopt
+            </button>
+
+            <button class="btn-foster flex-fill"
+                    onclick="openFosterModal('{{ pet.name }}', '{{ pet.breed }}', '{{ pet.age }}', '{{ pet.healthStatus }}', '{{ pet.vaccination }}')">
+                Foster
+            </button>
+            </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <p class="text-muted">No pets available right now. Check back soon!</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Adoption Modal -->
+<div class="modal fade" id="adoptionModal" tabindex="-1" aria-labelledby="adoptionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="adoptionForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="adoptionModalLabel">Adopt a Pet 🐾</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body text-start">
+          <div class="mb-3">
+            <label for="petDetails" class="form-label fw-bold">Pet Details</label>
+            <p id="petDetails" class="text-muted"></p>
+          </div>
+
+          <div class="mb-3">
+            <label for="adopterName" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="adopterName" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="adopterEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="adopterEmail" name="email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="adopterPhone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="adopterPhone" name="phone">
+          </div>
+
+          <div class="mb-3">
+            <label for="adoptionMessage" class="form-label">Why do you want to adopt?</label>
+            <textarea class="form-control" id="adoptionMessage" name="message" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="fosterModal" tabindex="-1" aria-labelledby="fosterModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="adoptionForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fosterModalLabel">Foster a Pet 🐾</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body text-start">
+          <div class="mb-3">
+            <label for="petDetails" class="form-label fw-bold">Pet Details</label>
+            <p id="petDetails" class="text-muted"></p>
+          </div>
+
+          <div class="mb-3">
+            <label for="adopterName" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="adopterName" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="adopterEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="adopterEmail" name="email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="adopterPhone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="adopterPhone" name="phone">
+          </div>
+
+          <div class="mb-3">
+            <label for="adoptionMessage" class="form-label">Why do you want to Foster?</label>
+            <textarea class="form-control" id="adoptionMessage" name="message" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

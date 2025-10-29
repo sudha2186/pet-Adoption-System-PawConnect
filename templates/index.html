@@ -14,49 +14,51 @@
     </div>
 </section>
 
-<section class="pet-categories py-5">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Browse by Category</h2>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="category-card" onclick="showPetModal('dog')">
-                    <img src="https://images.unsplash.com/photo-1633722715463-d30628519d00?w=400&h=300&fit=crop" alt="Dogs" class="category-image">
-                    <div class="category-overlay">
-                        <h3>Dogs</h3>
-                        <p>Loyal & Loving</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="category-card" onclick="showPetModal('cat')">
-                    <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=300&fit=crop" alt="Cats" class="category-image">
-                    <div class="category-overlay">
-                        <h3>Cats</h3>
-                        <p>Independent & Playful</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="category-card" onclick="showPetModal('rabbit')">
-                    <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4d4b3f0?w=400&h=300&fit=crop" alt="Rabbits" class="category-image">
-                    <div class="category-overlay">
-                        <h3>Rabbits</h3>
-                        <p>Gentle & Cute</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="category-card" onclick="showPetModal('bird')">
-                    <img src="https://images.unsplash.com/photo-1444464666175-1642a9f33e12?w=400&h=300&fit=crop" alt="Birds" class="category-image">
-                    <div class="category-overlay">
-                        <h3>Birds</h3>
-                        <p>Colorful & Vocal</p>
-                    </div>
-                </div>
-            </div>
+<section class="browse-by-category py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4">Browse by Category 🐾</h2>
+    <div class="row g-4 justify-content-center">
+
+      <div class="col-md-3">
+        <div class="card shadow-sm category-card" onclick="goToAdoption('dog')">
+          <img src="{{ url_for('static', filename='images/categories/dog.jpg') }}" class="card-img-top rounded" alt="Dog">
+          <div class="card-body">
+            <h5 class="card-title">Dogs</h5>
+          </div>
         </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card shadow-sm category-card" onclick="goToAdoption('cat')">
+          <img src="{{ url_for('static', filename='images/categories/cat.jpg') }}" class="card-img-top rounded" alt="Cat">
+          <div class="card-body">
+            <h5 class="card-title">Cats</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card shadow-sm category-card" onclick="goToAdoption('rabbit')">
+          <img src="{{ url_for('static', filename='images/categories/rabbit.jpg') }}" class="card-img-top rounded" alt="Rabbit">
+          <div class="card-body">
+            <h5 class="card-title">Rabbits</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card shadow-sm category-card" onclick="goToAdoption('bird')">
+          <img src="{{ url_for('static', filename='images/categories/bird.jpg') }}" class="card-img-top rounded" alt="Bird">
+          <div class="card-body">
+            <h5 class="card-title">Birds</h5>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </section>
+
 
 <section class="featured-pets py-5 bg-light">
     <div class="container">
@@ -95,5 +97,19 @@
         </div>
     </div>
 </section>
+<!-- Pet Details Modal -->
+<div class="modal fade" id="petModal" tabindex="-1" aria-labelledby="petModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="petModalTitle">Pet Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="petModalBody">
+        <!-- Filled dynamically by JS -->
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

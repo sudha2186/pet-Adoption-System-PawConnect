@@ -22,9 +22,49 @@
                     <li>💬 Meet like-minded animal lovers</li>
                     <li>❤️ Support pet adoption initiatives</li>
                 </ul>
-                <a href="{{ url_for('contact') }}" class="btn btn-primary-custom mt-3">Book a Visit</a>
+                <button class="btn btn-primary-custom mt-3" onclick="openCafeBookingModal()">Book a Visit</button>
             </div>
         </div>
     </div>
 </section>
+<!-- Café Booking Modal -->
+<div class="modal fade" id="cafeBookingModal" tabindex="-1" aria-labelledby="cafeBookingLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="cafeBookingForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cafeBookingLabel">Book Your Pet Café Visit ☕🐾</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body text-start">
+          <div class="mb-3">
+            <label for="visitorName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="visitorName" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="visitorEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="visitorEmail" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="visitorDate" class="form-label">Preferred Date</label>
+            <input type="date" class="form-control" id="visitorDate" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="visitorMessage" class="form-label">Any Special Requests?</label>
+            <textarea class="form-control" id="visitorMessage" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success">Book Visit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

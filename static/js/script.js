@@ -3,8 +3,11 @@
 // ============================================
 
 // Import Bootstrap
-const bootstrap = window.bootstrap
+const bootstrap = window.bootstrap;
 
+// ============================================
+// Demo Pet Data
+// ============================================
 const petsData = [
   {
     id: 1,
@@ -84,243 +87,219 @@ const petsData = [
     image: "https://images.unsplash.com/photo-1444464666175-1642a9f33e12?w=400&h=300&fit=crop",
     description: "Colorful and vocal parrot, loves music and interaction.",
   },
-]
+];
 
-// Initialize featured pets on home page
+// ============================================
+// Initialization on DOM Load
+// ============================================
 document.addEventListener("DOMContentLoaded", () => {
-  const featuredContainer = document.getElementById("featuredPetsContainer")
-  if (featuredContainer) {
-    displayFeaturedPets()
+  // Featured pets on home page
+  const featuredContainer = document.getElementById("featuredPetsContainer");
+  if (featuredContainer) displayFeaturedPets();
+
+  // Adoption page pets
+  const petsContainer = document.getElementById("petsContainer");
+  if (petsContainer) displayAllPets();
+
+  // Adoption filter by URL query
+  const typeFilter = document.getElementById("typeFilter");
+  if (typeFilter) {
+    const params = new URLSearchParams(window.location.search);
+    const selectedType = params.get("type");
+    if (selectedType) {
+      typeFilter.value = selectedType;
+      filterPets();
+    }
   }
 
-  const petsContainer = document.getElementById("petsContainer")
-  if (petsContainer) {
-    displayAllPets()
-  }
+  // Attach form submit handlers
+  attachFormListeners();
+});
 
-  // Form submissions
-  const adoptionForm = document.getElementById("adoptionForm")
-  if (adoptionForm) {
-    adoptionForm.addEventListener("submit", handleFormSubmit)
-  }
-
-  const fosterForm = document.getElementById("fosterForm")
-  if (fosterForm) {
-    fosterForm.addEventListener("submit", handleFormSubmit)
-  }
-
-  const bookingForm = document.querySelector(".booking-form")
-  if (bookingForm) {
-    bookingForm.addEventListener("submit", handleFormSubmit)
-  }
-
-  const volunteerForm = document.querySelector(".volunteer-form")
-  if (volunteerForm) {
-    volunteerForm.addEventListener("submit", handleFormSubmit)
-  }
-
-  const donationForm = document.querySelector(".donation-form")
-  if (donationForm) {
-    donationForm.addEventListener("submit", handleFormSubmit)
-  }
-
-  const contactForm = document.querySelector(".contact-form")
-  if (contactForm) {
-    contactForm.addEventListener("submit", handleFormSubmit)
-  }
-
-  const loginForm = document.querySelector(".login-form")
-  if (loginForm) {
-    loginForm.addEventListener("submit", handleFormSubmit)
-  }
-
-  const registerForm = document.querySelector(".register-form")
-  if (registerForm) {
-    registerForm.addEventListener("submit", handleFormSubmit)
-  }
-})
-
-// Display featured pets (first 3)
+// ============================================
+// Display Pets
+// ============================================
 function displayFeaturedPets() {
-  const container = document.getElementById("featuredPetsContainer")
-  const featured = petsData.slice(0, 3)
-
+  const container = document.getElementById("featuredPetsContainer");
+  const featured = petsData.slice(0, 3);
   featured.forEach((pet) => {
-    const petCard = createPetCard(pet)
-    container.appendChild(petCard)
-  })
+    const petCard = createPetCard(pet);
+    container.appendChild(petCard);
+  });
 }
 
-// Display all pets with filters
 function displayAllPets() {
-  const container = document.getElementById("petsContainer")
-  container.innerHTML = ""
-
+  const container = document.getElementById("petsContainer");
+  container.innerHTML = "";
   petsData.forEach((pet) => {
-    const petCard = createPetCard(pet)
-    container.appendChild(petCard)
-  })
+    const petCard = createPetCard(pet);
+    container.appendChild(petCard);
+  });
 }
 
 function createPetCard(pet) {
-  const col = document.createElement("div")
-  col.className = "col-md-6 col-lg-4"
+  const col = document.createElement("div");
+  col.className = "col-md-6 col-lg-4";
 
-  const card = document.createElement("div")
-  card.className = "pet-card"
+  const card = document.createElement("div");
+  card.className = "pet-card";
 
-  const ageLabel = pet.age.charAt(0).toUpperCase() + pet.age.slice(1)
-  const genderLabel = pet.gender.charAt(0).toUpperCase() + pet.gender.slice(1)
+  const ageLabel = capitalize(pet.age);
+  const genderLabel = capitalize(pet.gender);
+  const typeLabel = capitalize(pet.type);
 
   card.innerHTML = `
-        <img src="${pet.image}" alt="${pet.name}" class="pet-image">
-        <div class="pet-info">
-            <div class="pet-name">${pet.name}</div>
-            <div class="pet-details">
-                <span>${ageLabel}</span> • <span>${genderLabel}</span> • <span>${pet.type.charAt(0).toUpperCase() + pet.type.slice(1)}</span>
-            </div>
-            <div class="pet-features">
-                <span class="pet-feature-badge">${pet.breed}</span>
-                <span class="pet-feature-badge">${pet.weight}</span>
-                <span class="pet-feature-badge">${pet.healthStatus}</span>
-            </div>
-            <div class="pet-description">${pet.description}</div>
-            <div class="pet-buttons">
-                <button class="btn-adopt" onclick="openAdoptionModal()">Adopt</button>
-                <button class="btn-foster" onclick="openFosterModal()">Foster</button>
-            </div>
-        </div>
-    `
+    <img src="${pet.image}" alt="${pet.name}" class="pet-image">
+    <div class="pet-info">
+      <div class="pet-name">${pet.name}</div>
+      <div class="pet-details"><span>${ageLabel}</span> • <span>${genderLabel}</span> • <span>${typeLabel}</span></div>
+      <div class="pet-features">
+        <span class="pet-feature-badge">${pet.breed}</span>
+        <span class="pet-feature-badge">${pet.weight}</span>
+        <span class="pet-feature-badge">${pet.healthStatus}</span>
+      </div>
+      <div class="pet-description">${pet.description}</div>
+      <div class="pet-buttons d-flex gap-2 justify-content-center mt-3">
+      <button class="btn-adopt flex-fill"
+        onclick="openAdoptionModal('${pet.name}', '${pet.breed}', '${pet.age}', '${pet.healthStatus}', '${pet.vaccination}')">
+        Adopt
+      </button>
+      <button class="btn-foster flex-fill"
+        onclick="openFosterModal('${pet.name}', '${pet.breed}', '${pet.age}', '${pet.healthStatus}', '${pet.vaccination}')">
+        Foster
+      </button>
+    </div>
 
-  col.appendChild(card)
-  return col
+    </div>
+  `;
+
+  col.appendChild(card);
+  return col;
 }
 
-// Filter pets
+// ============================================
+// Filter Pets by Category
+// ============================================
 function filterPets() {
-  const typeFilter = document.getElementById("typeFilter").value
-  const ageFilter = document.getElementById("ageFilter").value
-  const genderFilter = document.getElementById("genderFilter").value
-  const vaccinationFilter = document.getElementById("vaccinationFilter").value
+  const typeFilter = document.getElementById("typeFilter");
+  const selectedType = typeFilter.value.toLowerCase();
+  const container = document.getElementById("petsContainer");
 
-  const container = document.getElementById("petsContainer")
-  container.innerHTML = ""
+  if (!container) return;
 
-  const filtered = petsData.filter((pet) => {
-    return (
-      (typeFilter === "" || pet.type === typeFilter) &&
-      (ageFilter === "" || pet.age === ageFilter) &&
-      (genderFilter === "" || pet.gender === genderFilter) &&
-      (vaccinationFilter === "" || pet.vaccination === vaccinationFilter)
-    )
-  })
-
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="col-12 text-center"><p>No pets found matching your criteria.</p></div>'
-    return
-  }
-
-  filtered.forEach((pet) => {
-    const petCard = createPetCard(pet)
-    container.appendChild(petCard)
-  })
+  const cards = container.querySelectorAll(".pet-card");
+  cards.forEach((card) => {
+    const petType = card.querySelector(".pet-details span:last-child").textContent.toLowerCase();
+    card.parentElement.style.display =
+      selectedType === "" || petType.includes(selectedType) ? "" : "none";
+  });
 }
 
-// Show pet modal
-function showPetModal(type) {
-  const modal = new bootstrap.Modal(document.getElementById("petModal"))
-  const pet = petsData.find((p) => p.type === type)
-
-  if (pet) {
-    document.getElementById("petModalTitle").textContent =
-      `${pet.name} - ${pet.type.charAt(0).toUpperCase() + pet.type.slice(1)}`
-    document.getElementById("petModalBody").innerHTML = `
-            <img src="${pet.image}" alt="${pet.name}" style="width: 100%; border-radius: 12px; margin-bottom: 20px;">
-            <p><strong>Name:</strong> ${pet.name}</p>
-            <p><strong>Breed:</strong> ${pet.breed}</p>
-            <p><strong>Type:</strong> ${pet.type.charAt(0).toUpperCase() + pet.type.slice(1)}</p>
-            <p><strong>Age:</strong> ${pet.age.charAt(0).toUpperCase() + pet.age.slice(1)}</p>
-            <p><strong>Gender:</strong> ${pet.gender.charAt(0).toUpperCase() + pet.gender.slice(1)}</p>
-            <p><strong>Weight:</strong> ${pet.weight}</p>
-            <p><strong>Health Status:</strong> ${pet.healthStatus}</p>
-            <p><strong>Vaccination:</strong> ${pet.vaccination === "vaccinated" ? "Yes" : "No"}</p>
-            <p><strong>Description:</strong> ${pet.description}</p>
-            <div class="pet-buttons">
-                <button class="btn-adopt" onclick="openAdoptionModal()">Adopt</button>
-                <button class="btn-foster" onclick="openFosterModal()">Foster</button>
-            </div>
-        `
-    modal.show()
-  }
+// ============================================
+// Modals & Buttons
+// ============================================
+function goToAdoption(category) {
+  window.location.href = `/adoption?type=${category}`;
 }
 
-// Open adoption modal
-function openAdoptionModal() {
-  const modal = new bootstrap.Modal(document.getElementById("adoptionModal"))
-  modal.show()
+function openAdoptionModal(petName, breed, age, healthStatus, vaccination) {
+  const modal = new bootstrap.Modal(document.getElementById("adoptionModal"));
+  document.getElementById("adoptionModalLabel").textContent = `Adopt ${petName} 🐾`;
+  document.getElementById("petDetails").innerHTML = `
+    <p><strong>Breed:</strong> ${breed}</p>
+    <p><strong>Age:</strong> ${age}</p>
+    <p><strong>Health:</strong> ${healthStatus}</p>
+    <p><strong>Vaccination:</strong> ${vaccination}</p>
+  `;
+  modal.show();
 }
 
-// Open foster modal
-function openFosterModal() {
-  const modal = new bootstrap.Modal(document.getElementById("fosterModal"))
-  modal.show()
+function openFosterModal(petName, breed, age, healthStatus, vaccination) {
+  const modal = new bootstrap.Modal(document.getElementById("fosterModal"));
+  document.getElementById("fosterModalLabel").textContent = `Foster ${petName} 💕`;
+  document.getElementById("petDetails").innerHTML = `
+    <p><strong>Breed:</strong> ${breed}</p>
+    <p><strong>Age:</strong> ${age}</p>
+    <p><strong>Health:</strong> ${healthStatus}</p>
+    <p><strong>Vaccination:</strong> ${vaccination}</p>
+  `;
+  modal.show();
 }
 
-// Handle form submissions
+
+// ============================================
+// Handle Form Submissions
+// ============================================
+function attachFormListeners() {
+  const forms = [
+    ".booking-form",
+    ".volunteer-form",
+    ".donation-form",
+    ".contact-form",
+    ".login-form",
+    ".register-form",
+  ];
+
+  forms.forEach((selector) => {
+    const form = document.querySelector(selector);
+    if (form) form.addEventListener("submit", handleFormSubmit);
+  });
+}
+
 function handleFormSubmit(e) {
-  e.preventDefault()
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
 
-  // Get form data
-  const formData = new FormData(e.target)
-  const data = Object.fromEntries(formData)
+  console.log("Form submitted:", data);
+  alert("✅ Thank you for your submission! We’ll get back to you soon.");
 
-  // Log form data (in production, this would be sent to Flask backend)
-  console.log("Form submitted:", data)
+  e.target.reset();
 
-  // Show success message
-  alert("Thank you for your submission! We will get back to you soon.")
-
-  // Reset form
-  e.target.reset()
-
-  // Close modal if it's inside one
-  const modal = e.target.closest(".modal")
+  const modal = e.target.closest(".modal");
   if (modal) {
-    const bsModal = bootstrap.Modal.getInstance(modal)
-    if (bsModal) {
-      bsModal.hide()
-    }
+    const bsModal = bootstrap.Modal.getInstance(modal);
+    if (bsModal) bsModal.hide();
   }
+}
+
+// ============================================
+// Pet Café Booking
+// ============================================
+function openCafeBookingModal() {
+  const modal = new bootstrap.Modal(document.getElementById("cafeBookingModal"));
+  modal.show();
+}
+
+// ============================================
+// Utilities & Animations
+// ============================================
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
-    e.preventDefault()
-    const target = document.querySelector(this.getAttribute("href"))
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-      })
-    }
-  })
-})
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute("href"));
+    if (target) target.scrollIntoView({ behavior: "smooth" });
+  });
+});
 
-// Add animation on scroll
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -100px 0px",
-}
+// Add fade-in animation on scroll
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = "fadeIn 0.5s ease-out forwards";
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
+);
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.style.animation = "fadeIn 0.5s ease-out forwards"
-      observer.unobserve(entry.target)
-    }
-  })
-}, observerOptions)
-
-document.querySelectorAll(".pet-card, .category-card, .feature-card, .info-card").forEach((el) => {
+document.querySelectorAll(".pet-card, .category-card, .feature-card, .info-card").forEach((el) =>
   observer.observe(el)
-})
+);
