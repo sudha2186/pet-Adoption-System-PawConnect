@@ -19,7 +19,7 @@ const petsData = [
     weight: "28 kg",
     vaccination: "vaccinated",
     healthStatus: "Excellent",
-    image: "/static/images/bigdog.jpg",
+    image: "/static/images/pets/bigdog.jpg",
     description: "Friendly and energetic Golden Retriever looking for an active family.",
   },
   {
@@ -32,7 +32,7 @@ const petsData = [
     weight: "4 kg",
     vaccination: "vaccinated",
     healthStatus: "Good",
-    image: "/static/images/whitecat.jpg",
+    image: "/static/images/pets/whitecat.jpg",
     description: "Playful and affectionate tabby cat perfect for families.",
   },
   {
@@ -45,7 +45,7 @@ const petsData = [
     weight: "2 kg",
     vaccination: "vaccinated",
     healthStatus: "Excellent",
-    image: "/static/images/rabbit.jpg",
+    image: "/static/images/pets/rabbit.jpg",
     description: "Cute and gentle rabbit, loves vegetables and cuddles.",
   },
   {
@@ -58,7 +58,7 @@ const petsData = [
     weight: "32 kg",
     vaccination: "vaccinated",
     healthStatus: "Good",
-    image: "/static/images/puppydogwhite.jpg",
+    image: "/static/images/pets/puppydogwhite.jpg",
     description: "Calm and well-trained Labrador, great with kids.",
   },
   {
@@ -71,7 +71,7 @@ const petsData = [
     weight: "5 kg",
     vaccination: "vaccinated",
     healthStatus: "Fair",
-    image: "/static/images/blacktigercat.jpg",
+    image: "/static/images/pets/blacktigercat.jpg",
     description: "Gentle senior cat seeking a quiet home.",
   },
   {
@@ -84,7 +84,7 @@ const petsData = [
     weight: "0.5 kg",
     vaccination: "not-vaccinated",
     healthStatus: "Excellent",
-    image: "/static/images/parrot.jpg",
+    image: "/static/images/pets/parrot.jpg",
     description: "Colorful and vocal parrot, loves music and interaction.",
   },
 ];

@@ -12,9 +12,9 @@ def adoption():
     pet_type = request.args.get('type', '')
 
     pets = [
-        {"name": "Max", "breed": "Golden Retriever", "age": 2, "type": "dog", "image": "dog1.jpg", "healthStatus": "Healthy", "vaccination": "Yes"},
-        {"name": "Milo", "breed": "Persian Cat", "age": 1, "type": "cat", "image": "cat1.jpg", "healthStatus": "Healthy", "vaccination": "Yes"},
-        {"name": "Coco", "breed": "Parrot", "age": 3, "type": "bird", "image": "bird1.jpg", "healthStatus": "Good", "vaccination": "Yes"}
+        {"name": "Max", "breed": "Golden Retriever", "age": 2, "type": "dog", "image": "bigdog.jpg", "healthStatus": "Healthy", "vaccination": "Yes"},
+        {"name": "Fluffy", "breed": "Persian Cat", "age": 1, "type": "cat", "image": "whitecat.jpg", "healthStatus": "Healthy", "vaccination": "Yes"},
+        {"name": "Charlie", "breed": "Rabbit", "age": 3, "type": "Rabbit", "image": "rabbit.jpg", "healthStatus": "Good", "vaccination": "Yes"}
     ]
 
     if pet_type:
